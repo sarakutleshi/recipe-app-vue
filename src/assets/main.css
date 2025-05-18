@@ -1,0 +1,214 @@
+:root {
+    --main-font: Bahnschrift, sans-serif;
+    --accent-color: #b66b51;
+    --hover-color: #e89a7e;
+    --button-bg: #d79c87;
+    --button-hover-bg: #b66b51;
+    --box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --background-white: white;
+}
+
+* {
+    font-family: var(--main-font), serif;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    background-color: var(--background-white);
+    box-sizing: border-box;
+}
+
+/* ===========================
+     SECTION TITLES & TEXT
+   =========================== */
+.features h5,
+.row-features h5 {
+    color: var(--accent-color);
+    font-family: var(--main-font), serif;
+    font-weight: bold;
+}
+
+.paragraph {
+    color: #9b8c86;
+    font-family: var(--main-font), serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding-top: 10px;
+}
+
+h4 {
+    font-family: var(--main-font), serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    color: #513a32;
+}
+
+.first-text,
+.second-text {
+    font-weight: 600;
+    font-family: var(--main-font), serif;
+}
+
+/* ===========================
+        BUTTONS
+   =========================== */
+.btn, .btn1, .btn2 {
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px;
+    transition: all 0.3s ease;
+    font-family: var(--main-font), serif;
+    font-weight: 600;
+}
+
+.btn {
+    background-color: var(--button-bg);
+    border: 2px solid ;
+    color: white;
+}
+
+.btn:hover {
+    background-color: var(--button-hover-bg);
+    border-color: var(--button-hover-bg);
+}
+
+.btn1 {
+    border: 2px solid var(--button-bg);
+    color: var(--button-bg);
+    background-color: transparent;
+}
+
+.btn1:hover {
+    background-color: var(--button-bg);
+    color: white;
+}
+
+.btn2 {
+    border: none;
+    color: var(--button-bg);
+    background-color: transparent;
+}
+
+.btn2:hover {
+    color: var(--hover-color);
+}
+
+/* ===========================
+        RECIPE CARDS
+   =========================== */
+.recipe-card {
+    background-color: var(--background-white);
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    padding: 10px;
+    text-align: center;
+}
+
+.recipe-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+}
+
+.recipe-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.recipe-card h4 {
+    margin-top: 10px;
+    color: #513a32;
+    font-weight: 600;
+    font-family: var(--main-font), serif;
+}
+
+/* ===========================
+       FEATURED RECIPES GRID
+   =========================== */
+.featured-recipes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* ===========================
+        FEATURE LIST & ICONS
+   =========================== */
+.features {
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.features-icon {
+    color: var(--accent-color);
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+/* ===========================
+        FORM ELEMENTS
+   =========================== */
+.form-control, .input-form {
+    border: 1px solid #d79c87;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    font-family: var(--main-font), serif;
+    font-weight: 600;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus, .input-form:focus {
+    border-color: var(--hover-color);
+    outline: none;
+}
+
+#sub {
+    width: 150px;
+    font-weight: 600;
+    border: 2px solid var(--button-bg);
+    background-color: var(--button-bg);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#sub:hover {
+    background-color: var(--button-hover-bg);
+    border-color: var(--button-hover-bg);
+}
+
+/* ===========================
+        TEXT & PARAGRAPHS
+   =========================== */
+.text-subscribe {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    font-family: var(--main-font), serif;
+}
+
+/* ===========================
+        RESPONSIVE & UTILITY
+   =========================== */
+.center {
+    text-align: center;
+}
+
+h2 {
+    font-family: var(--main-font), sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #513a32;
+}

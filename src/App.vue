@@ -1,10 +1,7 @@
 <script setup>
-import NavBar from "@/components/NavBar.vue";
+import TheLayout from "@/components/TheLayout.vue";
 </script>
 
 <template>
-<NavBar />
+  <the-layout/>
 </template>
-
-<style scoped>
-</style>
