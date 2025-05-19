@@ -1,0 +1,86 @@
+[
+  {
+    "id" : 1,
+    "imageUrl": "https://i.pinimg.com/736x/55/cc/3c/55cc3cbe8dee5a8a7eafe8939175ed19.jpg",
+    "username": "The impact of Sugar Consuming on Your Health",
+    "content": "Consuming too much sugar, particularly added sugars, can have a significant negative impact on your health...",
+    "src": "/blog/1"
+  },
+  {
+    "id" : 2,
+    "imageUrl": "https://i.pinimg.com/736x/62/9f/b5/629fb51f2f1a40beb15b8a581211ba24.jpg",
+    "username": "Unlock the benefits of Intermittent Fasting",
+    "content": "Intermittent fasting has gained significant attention for its potential health benefits. It involves cycling between periods of eating and fasting...",
+    "src": "/blog/2"
+  },
+  {
+    "id" : 3,
+    "imageUrl": "https://i.pinimg.com/736x/b4/d3/fa/b4d3fa1e810b5f453642e659cae5f529.jpg",
+    "username": "Secrets to Staying Active During Busy Days",
+    "content": "Don't let a packed schedule keep you from staying active. Try these simple strategies to fit exercise into your day...",
+    "src": "/blog/3"
+  },
+  {
+    "id" : 4,
+    "imageUrl": "https://i.pinimg.com/736x/41/46/0b/41460b7068fb799e2f4e3d5ae974f7ad.jpg",
+    "username": "10 Superfoods to Boost Your Immune System",
+    "content": "Incorporating superfoods like berries, nuts, and leafy greens into your diet can significantly enhance your immune health...",
+    "src": "/blog/4"
+  },
+  {
+    "id" : 5,
+    "imageUrl": "https://i.pinimg.com/736x/f1/22/cd/f122cd5c7942be87e9c4f2b2bfbb9c57.jpg",
+    "username": "How to Build a Sustainable Workout Routine",
+    "content": "Consistency is key when it comes to fitness. Check out these tips to build a workout routine that lasts...",
+    "src": "/blog/11"
+  },
+  {
+    "id" : 6,
+    "imageUrl": "https://i.pinimg.com/736x/40/ac/09/40ac095cf913620afcc00a8038367c93.jpg",
+    "username": "The Role of Gut Health in Overall Wellness",
+    "content": "Your gut health impacts everything from digestion to mental health. Discover ways to support your gut microbiome...",
+    "src": "/blog/6"
+  },
+  {
+    "id" : 7,
+    "imageUrl": "https://i.pinimg.com/736x/5c/b8/35/5cb835bdf2491ad0b5a3d28b5c40702f.jpg",
+    "username": "5 Easy Ways to Reduce Food Waste",
+    "content": "Reducing food waste helps the environment and saves money. Check out these simple strategies to minimize waste...",
+    "src": "/blog/7"
+  },
+  {
+    "id" : 8,
+    "imageUrl": "https://i.pinimg.com/736x/62/08/ec/6208ec3459eb95987a3e3ea5b8cc2e0d.jpg",
+    "username": "Top 7 Morning Routines for Better Productivity",
+    "content": "Start your day right with simple and effective routines to boost your productivity and energy levels...",
+    "src": "/blog/8"
+  },
+  {
+    "id" : 9 ,
+    "imageUrl": "https://i.pinimg.com/736x/41/cb/6b/41cb6b3d18fe25522dc54de0c7b44f4d.jpg",
+    "username": "Understanding the Power of Mindful Eating",
+    "content": "Mindful eating can transform your relationship with food. Learn how to slow down and savor every bite...",
+    "src": "/blog/9"
+  },
+  {
+    "id" : 10,
+    "imageUrl": "https://i.pinimg.com/736x/2a/24/fd/2a24fdef32eb470e3d759e0e37945487.jpg",
+    "username": "Plant-Based Diets: Myths and Facts",
+    "content": "Discover the truth about plant-based diets and how they can benefit your health and the planet...",
+    "src": "/blog/10"
+  },
+  {
+    "id" : 11,
+    "imageUrl": "https://i.pinimg.com/736x/cd/cf/0a/cdcf0ad744789bb60ea5ad51d6186b81.jpg",
+    "username": "How to Stay Hydrated: Tips and Tricks",
+    "content": "Proper hydration is essential for overall health and well-being. Learn how to stay hydrated with these practical tips...",
+    "src": "/blog/5"
+  },
+  {
+    "id" : 12,
+    "imageUrl": "https://i.pinimg.com/736x/29/35/e5/2935e588d80006e69dfc03e2f83b8977.jpg",
+    "username": "5 Herbal Teas That Promote Relaxation",
+    "content": "From chamomile to lavender, explore the best herbal teas to help you unwind after a long day...",
+    "src": "/blog/12"
+  }
+]
