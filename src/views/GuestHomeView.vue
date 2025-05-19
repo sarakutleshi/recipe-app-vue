@@ -4,7 +4,7 @@ import RecipeCard from "@/components/RecipeCard.vue";
 
 import PopularRecipe from "@/popular-recipes.json";
 import {ref} from "vue";
-
+import BlogCards from "@/components/BlogCards.vue";
 const popularRecipes = ref(PopularRecipe);
 
 </script>
@@ -50,7 +50,7 @@ const popularRecipes = ref(PopularRecipe);
   </section>
 
 
-  <TitleSection title="Explore Recipes" />
+  <TitleSection title="Explore Recipes"/>
 
   <section class="featured-recipes">
     <RecipeCard
@@ -60,9 +60,9 @@ const popularRecipes = ref(PopularRecipe);
     />
   </section>
 
-  <TitleSection title="Blog" />
+  <TitleSection title="Blog"/>
 
-
+  <BlogCards :limit="3"/>
 </template>
 <style scoped>
 * {
@@ -73,25 +73,10 @@ const popularRecipes = ref(PopularRecipe);
   background-color: white;
 }
 
-body{
+body {
   background-color: white;
 }
-.btn{
-  cursor: pointer;
-  display: inline-block;
-  background-color: #9f624d;
-  text-decoration: none;
-  color: white;
-  justify-content: space-evenly;
-  justify-items: center;
-  justify-self: center;
-  font-weight: bold;
-  border-radius: 5px;
-  margin: 5px;
-  padding: 10px;
-}
-
-.btn1 , .btn2{
+.btn1, .btn2 {
   cursor: pointer;
   display: inline-block;
   background-color: #d79c87;
@@ -102,7 +87,7 @@ body{
   padding: 10px 20px;
 }
 
-.btn:hover , .btn1:hover , .btn2:hover {
+.btn1:hover, .btn2:hover {
   color: #d79c87;
   background-color: #f5e0ce;
 }
@@ -136,6 +121,7 @@ body{
   font-size: 60px;
   color: black;
 }
+
 .homepage-content p {
   margin-top: 100px;
   color: black;
@@ -150,18 +136,6 @@ body{
   text-align: center;
 }
 
-.recipe-card {
-  background-color: white;
-  border-radius: 15px;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
-}
-
-.recipe-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
-}
 
 .recipe-card img {
   width: 100%;

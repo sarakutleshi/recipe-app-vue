@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import {useRouter} from "vue-router";
-const router = useRouter()
-
 </script>
 
 <template>
@@ -21,10 +18,10 @@ const router = useRouter()
                 <a class="nav-link" href="/guest-recipe">Recipe</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/guest-blog">Blog</a>
+                <a class="nav-link" href="/blog">Blog</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/guest-about">About Us</a>
+                <a class="nav-link" href="/about">About Us</a>
               </li>
             </ul>
           </div>
@@ -35,6 +32,8 @@ const router = useRouter()
         </div>
       </nav>
     </section>
+    <br>
+    <hr />
   </header>
 </template>
 
@@ -50,7 +49,6 @@ const router = useRouter()
 body{
   background-color: white;
 }
-
 .container-fluid {
   position: sticky;
   margin-left: 250px;
