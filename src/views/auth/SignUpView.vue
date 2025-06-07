@@ -1,3 +1,77 @@
+<script setup>
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+
+const router = useRouter();
+
+const maxDate = ref(new Date().toISOString().split('T')[0]); // "YYYY-MM-DD"
+
+const form = reactive({
+  name: '',
+  surname: '',
+  birthdate: '',
+  email: '',
+  username: '',
+  password: '',
+  confirmPassword: '',
+  acceptTerms: false,
+});
+
+const loading = ref(false);
+
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+async function handleSubmit() {
+  if (loading.value) return;
+
+  if (
+      !form.name ||
+      !form.surname ||
+      !form.birthdate ||
+      !form.email ||
+      !form.username ||
+      !form.password ||
+      !form.confirmPassword
+  ) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  if (!isValidEmail(form.email)) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+
+  if (form.password !== form.confirmPassword) {
+    alert('Passwords do not match.');
+    return;
+  }
+
+  if (!form.acceptTerms) {
+    alert('You must accept the terms and conditions.');
+    return;
+  }
+
+  loading.value = true;
+
+  try {
+    const response = await axios.post('http://localhost:8080/api/v1/auth/sign-up', form);
+    alert(response.data); // Assuming the backend sends a success message
+    await router.push({ name: 'login' });
+  } catch (error) {
+    console.error("Registration error:", error.response?.data || error.message);
+    alert(error.response?.data || 'Registration failed.');
+  } finally {
+    loading.value = false;
+  }
+}
+</script>
+
+
 <template>
   <div class="signup-form" style="display: flex">
     <div>
@@ -24,7 +98,9 @@
             <label>Birthdate</label>
             <input class="form-control signup-name" placeholder="Birthday"
                 v-model="form.birthdate" type="date"
-                :max="maxDate" min="1900-01-01" required/>
+                :max="maxDate" min="1950-01-01" required/>
+<!--            <input type="date" v-model="form.birthdate" :max="maxDate" />
+-->
           </div>
 
           <div class="email mb-3">
@@ -65,51 +141,9 @@
 
         <div class="auth-option text-center pt-5">
           Already have an account?
-          <router-link class="text-link" to="/log-in">Log in</router-link>
+          <a class="text-link" href="/auth/log-in">Log in</a>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      form: {
-        name: '',
-        surname: '',
-        birthdate: '',
-        email: '',
-        username: '',
-        password: '',
-        confirmPassword: '',
-        acceptTerms: false,
-      },
-    };
-  },
-  methods: {
-    async handleSubmit() {
-      console.log("Form submitted:", this.form);
-
-      // Simple client-side check
-      if (this.form.password !== this.form.confirmPassword) {
-        alert("Passwords do not match.");
-        return;
-      }
-
-      try {
-        const response = await axios.post('http://localhost:8080/sign-up', this.form);
-        alert(response.data); // Backend should return success message
-        this.$router.push('/log-in'); // Or use `window.location.href = '/log-in'`
-      } catch (error) {
-        console.error("Registration error:", error.response?.data || error.message);
-        alert(error.response?.data || "Registration failed");
-      }
-    },
-  },
-};
-
-</script>

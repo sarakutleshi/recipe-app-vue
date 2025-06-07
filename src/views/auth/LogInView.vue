@@ -1,5 +1,6 @@
 <script setup>
-import {reactive} from 'vue'
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const user = reactive({
   email: '',
@@ -12,29 +13,34 @@ const errors = reactive({
   password: ''
 })
 
+const router = useRouter()
+
 const validateForm = () => {
   errors.email = ''
   errors.password = ''
 
+  let isValid = true
+
   if (!user.email.includes('@')) {
     errors.email = 'Please enter a valid email address.'
-  }
-  if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,50}$/.test(form.password)) {
-    errors.password = 'Password must be at least 6 characters, include letters and numbers.'
+    isValid = false
   }
 
-  return !errors.email && !errors.password
+  return isValid
 }
 
 const handleSubmit = () => {
-  if (validateForm()) {
-    // Replace this with actual API call
-    console.log('Form submitted:', {...user})
-    alert('Logged in!')
+  if (!validateForm()) return
+
+  if (user.rememberMe) {
+    localStorage.setItem('rememberedEmail', user.email)
+  } else {
+    localStorage.removeItem('rememberedEmail')
   }
+
+  router.push({name : 'client-home'})
 }
 </script>
-
 
 <template>
   <div class="login-form">
@@ -42,8 +48,7 @@ const handleSubmit = () => {
       <div>
         <img
             src="https://i.pinimg.com/736x/11/e2/c1/11e2c18430aec77d4ae9f1b1a7e40ec8.jpg"
-            style="height: 320px; width: 300px; border-radius: 20px 0 0 20px"
-        />
+            style="height: 320px; width: 300px; border-radius: 20px 0 0 20px"/>
       </div>
       <div class="form-box">
         <h2>Login</h2>
@@ -56,17 +61,8 @@ const handleSubmit = () => {
         </div>
 
         <div class="textbox">
-          <input
-              v-model="user.password"
-              class="form-control signin-password"
-              type="password"
-              placeholder="Password"
-              required
-              minlength="6"
-              maxlength="50"
-              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,50}$"
-          />
-          <span class="text-danger" v-if="errors.password">{{ errors.password }}</span>
+          <input v-model="user.password" class="form-control signin-password"
+              type="password" placeholder="Password" required minlength="6" maxlength="50" />
         </div>
 
         <div class="form-check" style="display: flex; justify-content: flex-start">
@@ -78,10 +74,9 @@ const handleSubmit = () => {
 
         <input class="btn" type="submit" value="Log In"/>
 
-        <p>Don't have an account? <a href="/sign-up">Sign up</a></p>
+        <p>Don't have an account? <a href="/auth/sign-up">Sign up</a></p>
       </div>
     </form>
   </div>
 </template>
-
 

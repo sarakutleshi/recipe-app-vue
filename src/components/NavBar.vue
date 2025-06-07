@@ -26,8 +26,8 @@
             </ul>
           </div>
           <div class="d-flex ms-auto">
-            <a href="/log-in" class="btn">Log In</a>
-            <a href="/sign-up" class="btn">Sign In</a>
+            <a href="/auth/log-in" class="btn">Log In</a>
+            <a href="/auth/sign-up" class="btn">Sign In</a>
           </div>
         </div>
       </nav>
