@@ -26,7 +26,7 @@ const popularRecipes = ref(PopularRecipe);
         Log In to the app today and dive into a world of flavor at your fingertips. <br>
         Your next favorite recipe is just waiting to be discovered!
       </p>
-      <a class="btn2" href="/log-in">Log In</a>
+      <a class="btn2" href="/auth/log-in">Log In</a>
     </div>
     <img class="image" src="https://i.pinimg.com/736x/3d/c2/2d/3dc22dff3c0ca1616c075db2e13a31e5.jpg">
   </section>
@@ -45,7 +45,7 @@ const popularRecipes = ref(PopularRecipe);
         Sign In to the app and start cooking today!
       </p>
 
-      <a class="btn1" href="/sign-up">Sign Up</a>
+      <a class="btn1" href="/auth/sign-up">Sign Up</a>
     </div>
   </section>
 

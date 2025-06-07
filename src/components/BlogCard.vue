@@ -15,7 +15,7 @@ defineProps<{
     <div class="card-body">
       <h5 class="card-title">{{ blog.username }}</h5>
       <p class="card-text">{{ blog.content }}</p>
-      <a :href="/blogs/ + blog.id " class="btn">View More</a>
+      <a :href="`/blogs/${blog.id}`" class="btn">View More</a>
     </div>
   </div>
 </template>
