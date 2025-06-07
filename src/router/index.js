@@ -1,14 +1,14 @@
 // src/router/index.ts or index.js
 import { createRouter, createWebHistory } from 'vue-router';
-import GuestHomeView from '@/views/GuestHomeView.vue';
+import GuestHomeView from '@/views/guest/GuestHomeView.vue';
 import GuestRecipeView from '@/views/guest/GuestRecipeView.vue';
-import UserHomeView from '@/views/UserHomeView.vue';
+import UserHomeView from '@/views/users/UserHomeView.vue';
 import ViewRecipe from '@/views/ViewRecipe.vue';
-import BlogView from "@/views/BlogView.vue";
-import AboutView from "@/views/AboutView.vue";
-import LogInView from "@/views/auth/LogInView.vue";
+import BlogView from "@/views/shared/BlogView.vue";
+import AboutView from "@/views/shared/AboutView.vue";
 import SignUpView from "@/views/auth/SignUpView.vue";
-import {useAuthStore} from "@/stores/auth.js";
+import Recipes from "@/router/recipes.js";
+import AuthView from "@/views/auth/AuthView.vue";
 
 const routes = [
     {
@@ -21,11 +21,11 @@ const routes = [
     }, {
         path: '/auth/log-in',
         name: 'login',
-        component: LogInView,
+        component: AuthView,
         meta: {
             requiresAuth: false,
         }
-    }, {
+    },{
         path: '/auth/sign-up',
         name: 'signup',
         component: SignUpView,
@@ -34,7 +34,7 @@ const routes = [
         }
     },
     {
-        path: '/guest-client',
+        path: '/guest-recipe',
         name: 'guest-recipe',
         component: GuestRecipeView,
         meta: {
@@ -42,7 +42,7 @@ const routes = [
         }
     },
     {
-        path: '/client-home',
+        path: '/user-home',
         name: 'user-home',
         component: UserHomeView,
         meta: {
@@ -64,8 +64,8 @@ const routes = [
         }
     },
     {
-        path: '/views-recipes/:id',
-        name: 'views-recipes',
+        path: '/views-recipe/:id',
+        name: 'views-recipe',
         component: ViewRecipe,
         meta: {
             requiresAuth: true,
@@ -78,13 +78,7 @@ const routes = [
             requiresAuth: true,
         }
     },
-    // {
-    //     path: '/newRecipe',
-    //     name: 'new-client',
-    //     component: NewRecipe,
-    //     meta: {
-    //         requiresAuth: true,
-    //     }
+    ...Recipes
 
 ];
 

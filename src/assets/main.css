@@ -2,7 +2,7 @@
     --main-font: Bahnschrift, sans-serif;
     --accent-color: #b66b51;
     --hover-color: #e89a7e;
-    --button-bg: #d79c87;
+    --button-bg: #ffffff;
     --button-hover-bg: #b66b51;
     --box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
     --background-white: white;
@@ -94,6 +94,7 @@ h4 {
 
 .btn2:hover {
     color: var(--hover-color);
+
 }
 
 /* ===========================
@@ -318,7 +319,7 @@ body{
 
 .btn:hover , .btn1:hover , .btn2:hover {
     color: #d79c87;
-    background-color: #f5e0ce;
+    background-color: #e89a7e;
 }
 
 .homepage-content .image {
@@ -401,7 +402,7 @@ body{
 }
 
 .recipe-card a {
-    color: #d79c87;
+    color: #ffffff;
     text-decoration: none;
     font-weight: bold;
     display: inline-block;
@@ -410,6 +411,7 @@ body{
 
 .recipe-card a:hover {
     text-decoration: underline;
+    color: #ffffff;
 }
 
 .row-features h5 {

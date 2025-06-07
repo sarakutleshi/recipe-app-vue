@@ -1,149 +1,158 @@
 <script setup>
-import { reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import axios from 'axios';
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import {useAuthStore} from "@/stores/auth.js";
+import { useAppToast } from '@/composables/useAppToast.js'
+import { useLoading } from "@/composables/useLoading.js"
+import userService from "@/services/userService.js"
 
-const router = useRouter();
-
-const maxDate = ref(new Date().toISOString().split('T')[0]); // "YYYY-MM-DD"
+const router = useRouter()
+const authStore = useAuthStore()
+const toast = useAppToast()
+const { isLoading, withLoading } = useLoading()
 
 const form = reactive({
-  name: '',
-  surname: '',
-  birthdate: '',
-  email: '',
-  username: '',
-  password: '',
-  confirmPassword: '',
-  acceptTerms: false,
-});
+  name: { val: '', isValid: true },
+  surname: { val: '', isValid: true },
+  username: { val: '', isValid: true },
+  email: { val: '', isValid: true },
+  password: { val: '', isValid: true },
+  confirmPassword: { val: '', isValid: true },
+  // birthdate: { val: '', isValid: true },
+  role: 'USER'
+})
 
-const loading = ref(false);
+const formIsValid = ref(true)
 
-function isValidEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+const validateForm = () => {
+  formIsValid.value = true
+  for (const key in form) {
+    if (form[key].val !== undefined && !form[key].val) {
+      form[key].isValid = false
+      formIsValid.value = false
+    }
+  }
+}
+//
+// const validateDate = () => {
+//   const date = new Date(form.birthdate.val);
+//   form.birthdate.isValid = date < new Date();
+//   if (!form.birthdate.isValid) {
+//     toast.showWarning("Birth date must be in the past");
+//   }
+// }
+
+const clearValidity = (key) => {
+  form[key].isValid = true
 }
 
-async function handleSubmit() {
-  if (loading.value) return;
-
-  if (
-      !form.name ||
-      !form.surname ||
-      !form.birthdate ||
-      !form.email ||
-      !form.username ||
-      !form.password ||
-      !form.confirmPassword
-  ) {
-    alert('Please fill in all required fields.');
-    return;
+const handleSubmit = async () => {
+  validateForm()
+  if (!formIsValid.value) {
+    toast.showWarning('Please fill all fields!')
+    return
+  }
+  if (form.password.val !== form.confirmPassword.val) {
+    toast.showWarning('Passwords do not match!')
+    return
   }
 
-  if (!isValidEmail(form.email)) {
-    alert('Please enter a valid email address.');
-    return;
+  const obj = {
+    name: form.name.val,
+    surname: form.surname.val,
+    username: form.username.val,
+    email: form.email.val,
+    password: form.password.val,
+    confirmPassword: form.confirmPassword.val,
+    // birthDate: new Date(form.birthdate.val).toISOString().split('T')[0],
+    role: form.role
   }
 
-  if (form.password !== form.confirmPassword) {
-    alert('Passwords do not match.');
-    return;
-  }
-
-  if (!form.acceptTerms) {
-    alert('You must accept the terms and conditions.');
-    return;
-  }
-
-  loading.value = true;
-
-  try {
-    const response = await axios.post('http://localhost:8080/api/v1/auth/sign-up', form);
-    alert(response.data); // Assuming the backend sends a success message
-    await router.push({ name: 'login' });
-  } catch (error) {
-    console.error("Registration error:", error.response?.data || error.message);
-    alert(error.response?.data || 'Registration failed.');
-  } finally {
-    loading.value = false;
-  }
+  await withLoading(async () => {
+    const response = await userService.registerUser(obj)
+    if (response) {
+      toast.showSuccess("Registration successful!")
+      await router.push({name: 'login'})
+    }
+  })
 }
 </script>
 
-
 <template>
-  <div class="signup-form" style="display: flex">
-    <div>
-      <img src="https://i.pinimg.com/736x/0f/17/48/0f1748b05384a148c377b89d4244defb.jpg"
-           style="height: 655px; width: 550px; border-radius: 20px 0 0 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
-      />
-    </div>
-
-    <div class="form-box">
-      <div class="auth-form-container text-start mx-auto">
-        <form @submit.prevent="handleSubmit" class="auth-form auth-signup-form">
-          <div class="email mb-3">
-            <input
-                class="form-control signup-name" placeholder="Name"
-                v-model="form.name" required type="text"/>
-          </div>
-
-          <div class="email mb-3">
-            <input class="form-control signup-name" placeholder="Surname"
-                v-model="form.surname" required type="text"/>
-          </div>
-
-          <div class="email mb-3">
-            <label>Birthdate</label>
-            <input class="form-control signup-name" placeholder="Birthday"
-                v-model="form.birthdate" type="date"
-                :max="maxDate" min="1950-01-01" required/>
-<!--            <input type="date" v-model="form.birthdate" :max="maxDate" />
--->
-          </div>
-
-          <div class="email mb-3">
-            <input class="form-control signup-email" placeholder="Email"
-                v-model="form.email" required type="email"/>
-          </div>
-
-          <div class="email mb-3">
-            <input class="form-control signup-email" placeholder="Username"
-                v-model="form.username" required type="text"/>
-          </div>
-
-          <div class="password mb-3">
-            <input class="form-control signup-password" placeholder="Create a password"
-                v-model="form.password" required type="password"/>
-          </div>
-
-          <div class="password mb-3">
-            <input class="form-control signup-password" placeholder="Confirm password"
-                v-model="form.confirmPassword" required type="password"/>
-          </div>
-
-          <div class="extra mb-3">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox"
-                  v-model="form.acceptTerms" required/>
-              <label class="form-check-label">I agree to Portal's
-                <a class="app-link" href="#">Terms of Service</a> and
-                <a class="app-link" href="#">Privacy Policy</a>.
-              </label>
-            </div>
-          </div>
-
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-          </div>
-        </form>
-
-        <div class="auth-option text-center pt-5">
-          Already have an account?
-          <a class="text-link" href="/auth/log-in">Log in</a>
-        </div>
+  <section class="register-section vh-100 d-flex align-items-center justify-content-center">
+    <div class="card shadow p-4" style="max-width: 600px; width: 100%;">
+      <div class="text-center mb-4">
+        <h2 class="fw-bold">Sign Up</h2>
       </div>
+
+      <form @submit.prevent="handleSubmit">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Name</label>
+            <input v-model="form.name.val" class="form-control" :class="{ 'is-invalid': !form.name.isValid }" @blur="clearValidity('name')" />
+            <div class="invalid-feedback">Please enter your name.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Surname</label>
+            <input v-model="form.surname.val" class="form-control" :class="{ 'is-invalid': !form.surname.isValid }" @blur="clearValidity('surname')" />
+            <div class="invalid-feedback">Please enter your last name.</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">UserName</label>
+            <input v-model="form.username.val" class="form-control" :class="{ 'is-invalid': !form.username.isValid }" @blur="clearValidity('username')" />
+            <div class="invalid-feedback">Please enter username.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" v-model="form.email.val" class="form-control" :class="{ 'is-invalid': !form.email.isValid }" @blur="clearValidity('email')" />
+            <div class="invalid-feedback">Please enter a valid email address.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Password</label>
+            <input type="password" v-model="form.password.val" class="form-control" :class="{ 'is-invalid': !form.password.isValid }" @blur="clearValidity('password')" />
+            <div class="invalid-feedback">Please enter a password.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Confirm Password</label>
+            <input type="password" v-model="form.confirmPassword.val" class="form-control" :class="{ 'is-invalid': !form.confirmPassword.isValid }" @blur="clearValidity('confirmPassword')" />
+            <div class="invalid-feedback">Please confirm your password.</div>
+          </div>
+
+<!--          <div class="col-md-6">-->
+<!--            <label class="form-label">Birth Date</label>-->
+<!--            <input-->
+<!--                type="date"-->
+<!--                v-model="form.birthdate.val"-->
+<!--                @change="validateDate"-->
+<!--                :max="new Date().toISOString().split('T')[0]"-->
+<!--            >            <div class="invalid-feedback">Please enter your birth date.</div>-->
+<!--          </div>-->
+
+        </div>
+
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-primary btn-lg" :disabled="isLoading">Sign Up</button>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <span class="text-muted">Already have an account?
+            <router-link to="/auth/log-in" class="text-decoration-none">Login</router-link>
+          </span>
+        </div>
+      </form>
     </div>
-  </div>
+  </section>
 </template>
+
+<style scoped>
+.register-section {
+  background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
+}
+.card {
+  border-radius: 1rem;
+}
+</style>

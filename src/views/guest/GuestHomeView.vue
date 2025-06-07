@@ -65,13 +65,6 @@ const popularRecipes = ref(PopularRecipe);
   <BlogCards :limit="3"/>
 </template>
 <style scoped>
-* {
-  font-family: Bahnschrift, sans-serif;
-  margin: 0;
-  padding: 0;
-  scroll-behavior: smooth;
-  background-color: white;
-}
 
 body {
   background-color: white;
