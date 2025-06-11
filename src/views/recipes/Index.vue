@@ -17,50 +17,44 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
-    <!-- Error Message -->
-    <div v-if="error" class="alert alert-danger" role="alert">
-      <strong>Error!</strong> {{ error }}
+ <!-- Error Message -->
+  <div v-if="error" class="alert alert-danger" role="alert">
+    <strong>Error!</strong> {{ error }}
+  </div>
+
+  <!-- Success Message -->
+  <div v-if="success" class="alert alert-success" role="alert">
+    <strong>Info:</strong> {{ success }}
+  </div>
+
+  <!-- New Recipe Button -->
+  <div class="mb-3">
+    <router-link to="/new" class="btn" style="display: flex; justify-content: center; margin-bottom: 50px">
+      + New Recipe
+    </router-link>
+  </div>
+
+  <!-- No Recipes Warning -->
+  <div v-if="recipes.length === 0">
+    <hr/>
+    <div class="alert alert-warning" role="alert">
+      <strong>Warning!</strong> No recipes found.
     </div>
+  </div>
 
-    <!-- Success Message -->
-    <div v-if="success" class="alert alert-success" role="alert">
-      <strong>Info:</strong> {{ success }}
-    </div>
+  <!-- Recipe Cards -->
+  <div v-else style="display: flex; justify-content: center;">
+    <div class="recipe-container">
+      <div class="recipe-card" v-for="recipe in recipes" :key="recipe.id">
+        <img :src="recipe.imageUrl" alt="Recipe Image"/>
 
-    <!-- New Recipe Button -->
-    <div class="mb-3">
-      <router-link to="/new" class="btn" style="display: flex; justify-content: center; margin-bottom: 50px">
-        + New Recipe
-      </router-link>
-    </div>
+        <h4>{{ recipe.recipeName?.trim() || 'No Name Available' }}</h4>
 
-    <!-- No Recipes Warning -->
-    <div v-if="recipes.length === 0">
-      <hr/>
-      <div class="alert alert-warning" role="alert">
-        <strong>Warning!</strong> No recipes found.
-      </div>
-    </div>
+        <p><strong>Author:</strong> {{ recipe.authorName }}</p>
+        <p><strong>Created:</strong> {{ recipe.createdAt }}</p>
+        <p><strong>Category:</strong> {{ recipe.category }}</p>
 
-    <!-- Recipe Cards -->
-    <div v-else style="display: flex; justify-content: center;">
-      <div class="recipe-container">
-        <div class="recipe-card" v-for="recipe in recipes" :key="recipe.id">
-          <img :src="recipe.imageUrl" alt="Recipe Image"/>
-
-          <h4>{{ recipe.recipeName?.trim() || 'No Name Available' }}</h4>
-
-          <p><strong>Author:</strong> {{ recipe.authorName }}</p>
-          <p><strong>Created:</strong> {{ recipe.createdAt }}</p>
-          <p><strong>Category:</strong> {{ recipe.category }}</p>
-
-          <div class="actions">
-            <router-link class="btn" :to="`/${recipe.id}/details`" style="color: white;">Details</router-link>
-            <router-link class="btn" :to="`/${recipe.id}/edit`" style="color: white;">Edit</router-link>
-            <router-link class="btn" :to="`/${recipe.id}/delete`" style="color: white;">Delete</router-link>
-          </div>
-        </div>
+        <router-link class="btn" :to="`/details/${recipe.id}`">Details</router-link>
       </div>
     </div>
   </div>

@@ -1,48 +1,43 @@
 <script setup>
-import {computed, onMounted, ref} from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import axios from 'axios'
+import {ref, computed, onMounted} from 'vue';
+import {useRoute} from 'vue-router';
+import client from "@/helpers/client.js";
 
-const route = useRoute()
-const router = useRouter()
+const route = useRoute();
 
-const recipe = ref(null)
+const recipes = ref(null);
+const error = ref(false);
 
-// Fetch recipe by ID from backend
-onMounted(async () => {
-  try {
-    const id = route.params.id
-    const response = await axios.get(`/api/recipes/details/${id}`)
-    recipe.value = response.data
-  } catch (error) {
-    console.error('Error fetching recipe:', error)
-    recipe.value = null
-  }
-})
-
-// Fields to show with custom labels
-const displayedFields = computed(() => {
-  if (!recipe.value) return {}
-
+const displayFields = computed(() => {
+  if (!recipes.value) return {};
   return {
-    'Recipe Name': recipe.value.recipeName,
-    'Author Name': recipe.value.authorName,
-    'Ingredients': recipe.value.ingredients,
-    'Category': recipe.value.category,
-    'Servings': recipe.value.servings,
-    'Recipe Explanation': recipe.value.recipeExplanation,
-    'Protein': recipe.value.protein,
-    'ID': recipe.value.id,
-    'Minutes to Cook': recipe.value.minutesToCook,
-    'Hours to Cook': recipe.value.hoursToCook,
-    'Created Date': recipe.value.createdAt
-  }
-})
+    'First Name': recipes.value.recipeName,
+    'Last Name': recipes.value.authorName,
+    'Ingredients': recipes.value.ingredients,
+    'Category': recipes.value.category,
+    'Servings': recipes.value.servings,
+    'State': recipes.value.recipeExplanation,
+    'Protein': recipes.value.protein,
+    'ID': recipes.value.id,
+    'Minutes to Cook': recipes.value.minutesToCook,
+    'Hours to Cook': recipes.value.hoursToCook,
+    'Created Date': recipes.value.createdAt,
+  };
+});
 
-function goBack() {
-  router.back()
-}
+
+onMounted(() => {
+  const id = route.params.id;
+  client.get(`/recipes/details/${id}`)
+      .then((res) => {
+        recipes.value = res.data;
+      })
+      .catch(() => {
+        error.value = true;
+      });
+});
 </script>
+
 
 <template>
   <div class="container" id="naja">
@@ -51,29 +46,43 @@ function goBack() {
         Recipe Details
       </h2>
 
-      <!-- Show error if recipe not found -->
-      <div class="card-body" v-if="!recipe">
+      <div class="card-body" v-if="!recipes && error">
         <div class="alert alert-danger" role="alert">
           Recipe not found.
         </div>
       </div>
 
-      <!-- Show recipe details -->
-      <div class="card-body" v-else>
-        <div class="row mb-3" v-for="(value, label) in displayedFields" :key="label">
-          <div class="col-sm-4 detail-label">{{ label }}</div>
-          <div class="col-sm-8 detail-value">{{ value || '-' }}</div>
+      <div class="card-body" v-for="(value, key) in displayFields" :key="key">
+        <div class="row align-items-start mb-3 py-2 border-bottom">
+          <div class="col-sm-4 text-muted fw-semibold">{{ key }}</div>
+          <div class="col-sm-8 text-dark">{{ value }}</div>
         </div>
       </div>
 
-      <!-- Back Button -->
-      <div class="d-flex justify-content-center mt-4">
-        <button class="btn btn-secondary" @click="goBack">Back</button>
-      </div>
+      <router-link to="/" class="btn btn-secondary m-3">Back</router-link>
     </div>
   </div>
 </template>
 
 <style scoped>
+.card-body {
+  padding: 1rem;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.text-muted {
+  color: #6c757d;
+}
+
+.text-dark {
+  color: #212529;
+}
+
+.fw-semibold {
+  font-weight: 600;
+}
 
 </style>
