@@ -64,7 +64,6 @@ const handleSubmit = async () => {
     email: form.email.val,
     password: form.password.val,
     confirmPassword: form.confirmPassword.val,
-    // birthDate: new Date(form.birthdate.val).toISOString().split('T')[0],
     role: form.role
   }
 

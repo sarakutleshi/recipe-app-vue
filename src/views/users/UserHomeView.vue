@@ -39,6 +39,7 @@ const popularRecipes = ref(PopularRecipe);
         Have a client you love? We’d love to feature it! Share your favorite creations with us through our app, <br />
         and you could see your dish become part of our café’s menu. Let’s cook up something amazing together!
       </p>
+
       <a class="btn2" href="/index">Create New Recipe</a>
     </div>
   </section>

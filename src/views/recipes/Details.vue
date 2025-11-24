@@ -11,6 +11,7 @@ const error = ref(false);
 const displayFields = computed(() => {
   if (!recipes.value) return {};
   return {
+    'Recipe Photo': recipes.value.imageUrl,
     'First Name': recipes.value.recipeName,
     'Last Name': recipes.value.authorName,
     'Ingredients': recipes.value.ingredients,
@@ -55,9 +56,18 @@ onMounted(() => {
       <div class="card-body" v-for="(value, key) in displayFields" :key="key">
         <div class="row align-items-start mb-3 py-2 border-bottom">
           <div class="col-sm-4 text-muted fw-semibold">{{ key }}</div>
-          <div class="col-sm-8 text-dark">{{ value }}</div>
+
+          <div class="col-sm-8 text-dark">
+            <img
+                v-if="key === 'Recipe Photo' && value" :src="value" alt="Recipe image"
+                style="max-width: 150px; border-radius: 8px;"/>
+
+            <span v-else>{{ value }}</span>
+
+          </div>
         </div>
       </div>
+
 
       <router-link to="/" class="btn btn-secondary m-3">Back</router-link>
     </div>

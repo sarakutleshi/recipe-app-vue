@@ -1,5 +1,5 @@
 // src/router/index.ts or index.js
-import { createRouter, createWebHistory } from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import GuestHomeView from '@/views/guest/GuestHomeView.vue';
 import GuestRecipeView from '@/views/guest/GuestRecipeView.vue';
 import UserHomeView from '@/views/users/UserHomeView.vue';
@@ -9,6 +9,7 @@ import AboutView from "@/views/shared/AboutView.vue";
 import SignUpView from "@/views/auth/SignUpView.vue";
 import Recipes from "@/router/recipes.js";
 import AuthView from "@/views/auth/AuthView.vue";
+import Details from "@/views/recipes/Details.vue";
 
 const routes = [
     {
@@ -25,7 +26,7 @@ const routes = [
         meta: {
             requiresAuth: false,
         }
-    },{
+    }, {
         path: '/auth/sign-up',
         name: 'signup',
         component: SignUpView,
@@ -55,7 +56,7 @@ const routes = [
         meta: {
             requiresAuth: true,
         }
-    },{
+    }, {
         path: '/about',
         name: 'about',
         component: AboutView,
@@ -78,6 +79,14 @@ const routes = [
             requiresAuth: true,
         }
     },
+    {
+        path: '/details/:id',
+        name: 'details',
+        component: Details,
+        meta: {
+            requiresAuth: true,
+        }
+    },
     ...Recipes
 
 ];
@@ -86,5 +95,16 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes,
 });
+
+router.beforeEach((to, from, next) => {
+    const isLoggedIn = localStorage.getItem('token');
+
+    if (to.meta.requiresAuth && !isLoggedIn) {
+        next({name: 'login'});
+    } else {
+        next();
+    }
+});
+
 
 export default router;

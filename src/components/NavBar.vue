@@ -23,7 +23,8 @@ const onLogout = () => {
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" v-if="!authStore.isLoggedIn" href="/">Home</a>
+                <a  v-else class="nav-link"  href="/user-home">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/guest-recipe">Recipe</a>
