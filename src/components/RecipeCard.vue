@@ -16,7 +16,9 @@ defineProps<{
     <div class="card-body">
       <h5 class="card-title">{{ recipe.username }}</h5>
       <p class="card-text">{{ recipe.content }}</p>
-      <a :href="`/view-client/${recipe.id}`" class="btn">View More</a>
+      <router-link :to="`/views-recipe/${recipe.id}`" class="btn">
+        View More
+      </router-link>
     </div>
   </div>
 </template>

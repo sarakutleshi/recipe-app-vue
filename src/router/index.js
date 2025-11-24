@@ -3,13 +3,13 @@ import {createRouter, createWebHistory} from 'vue-router';
 import GuestHomeView from '@/views/guest/GuestHomeView.vue';
 import GuestRecipeView from '@/views/guest/GuestRecipeView.vue';
 import UserHomeView from '@/views/users/UserHomeView.vue';
-import ViewRecipe from '@/views/ViewRecipe.vue';
 import BlogView from "@/views/shared/BlogView.vue";
 import AboutView from "@/views/shared/AboutView.vue";
 import SignUpView from "@/views/auth/SignUpView.vue";
 import Recipes from "@/router/recipes.js";
 import AuthView from "@/views/auth/AuthView.vue";
 import Details from "@/views/recipes/Details.vue";
+import ViewRecipe from "@/views/ViewRecipe.vue";
 
 const routes = [
     {
@@ -68,9 +68,7 @@ const routes = [
         path: '/views-recipe/:id',
         name: 'views-recipe',
         component: ViewRecipe,
-        meta: {
-            requiresAuth: true,
-        }
+        meta: { requiresAuth: true },
     }, {
         path: '/blog/:id',
         name: 'blogs',
