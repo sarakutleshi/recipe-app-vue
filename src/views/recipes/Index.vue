@@ -17,7 +17,7 @@ onMounted(async () => {
 </script>
 
 <template>
- <!-- Error Message -->
+  <!-- Error Message -->
   <div v-if="error" class="alert alert-danger" role="alert">
     <strong>Error!</strong> {{ error }}
   </div>

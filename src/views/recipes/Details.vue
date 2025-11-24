@@ -1,12 +1,15 @@
 <script setup>
-import {ref, computed, onMounted} from 'vue';
-import {useRoute} from 'vue-router';
+import { ref, computed, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import client from "@/helpers/client.js";
 
 const route = useRoute();
+const router = useRouter();
 
 const recipes = ref(null);
 const error = ref(false);
+const deleting = ref(false);
+const deleteError = ref(null);
 
 const displayFields = computed(() => {
   if (!recipes.value) return {};
@@ -26,7 +29,6 @@ const displayFields = computed(() => {
   };
 });
 
-
 onMounted(() => {
   const id = route.params.id;
   client.get(`/recipes/details/${id}`)
@@ -37,8 +39,23 @@ onMounted(() => {
         error.value = true;
       });
 });
-</script>
+async function handleDelete() {
+  const confirmed = window.confirm("Are you sure you want to permanently delete this recipe?");
+  if (!confirmed) return;
+  deleting.value = true;
+  deleteError.value = null;
+  const id = route.params.id;
 
+  try {
+    await client.delete(`/recipes/${id}`);
+    await router.push('/index');
+  } catch (err) {
+    deleteError.value = err?.response?.data?.message || 'Failed to delete recipe. Please try again.';
+  } finally {
+    deleting.value = false;
+  }
+}
+</script>
 
 <template>
   <div class="container" id="naja">
@@ -69,7 +86,18 @@ onMounted(() => {
       </div>
 
 
-      <router-link to="/" class="btn btn-secondary m-3">Back</router-link>
+      <div v-if="deleteError" class="card-body">
+        <div class="alert alert-danger" role="alert">{{ deleteError }}</div>
+      </div>
+
+      <div class="card-body">
+        <router-link to="/index" class="btn btn-secondary m-3">Back</router-link>
+
+        <button class="btn btn-secondary m-3" @click="handleDelete" :disabled="deleting">
+          <span v-if="deleting">Deleting…</span>
+          <span v-else style="background-color: inherit; color: #650a0a">Delete</span>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -94,5 +122,5 @@ onMounted(() => {
 .fw-semibold {
   font-weight: 600;
 }
-
 </style>
+
