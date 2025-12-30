@@ -1,10 +1,16 @@
 <script setup>
 import {ref, onMounted} from 'vue'
-import client from '@/helpers/client.js' // your Axios instance
+import client from '@/helpers/client.js'
+import {useRoute, useRouter} from "vue-router";
+
+const route = useRoute();
+const router = useRouter();
 
 const recipes = ref([])
 const error = ref('')
 const success = ref('')
+const deleting = ref(false);
+const deleteError = ref(null);
 
 onMounted(async () => {
   try {
@@ -14,6 +20,23 @@ onMounted(async () => {
     error.value = err.response?.data?.message || 'Failed to load recipes.'
   }
 })
+
+async function handleDelete() {
+  const confirmed = window.confirm("Are you sure you want to permanently delete this recipe?");
+  if (!confirmed) return;
+  deleting.value = true;
+  deleteError.value = null;
+  const id = route.params.id;
+
+  try {
+    await client.delete(`/recipes/${id}`);
+    await router.push('/index');
+  } catch (err) {
+    deleteError.value = err?.response?.data?.message || 'Failed to delete recipe. Please try again.';
+  } finally {
+    deleting.value = false;
+  }
+}
 </script>
 
 <template>
@@ -55,7 +78,8 @@ onMounted(async () => {
         <p><strong>Category:</strong> {{ recipe.category }}</p>
 
         <router-link class="btn" :to="`/details/${recipe.id}`">Details</router-link>
-        <router-link class="btn" :to="`/edit/${recipe.id}`">Edit Recipe</router-link>
+        <router-link class="btn" :to="`/edit/${recipe.id}`">Edit</router-link>
+        <button class="btn" @click="handleDelete">🗑 Delete</button>
       </div>
     </div>
   </div>
@@ -107,5 +131,9 @@ onMounted(async () => {
   margin-top: 10px;
 }
 
+.btn:hover {
+  background-color: var(--button-hover-bg);
+  color: #170d0d;
+}
 
 </style>

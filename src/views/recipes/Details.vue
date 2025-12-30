@@ -8,8 +8,6 @@ const router = useRouter();
 
 const recipes = ref(null);
 const error = ref(false);
-const deleting = ref(false);
-const deleteError = ref(null);
 
 const displayFields = computed(() => {
   if (!recipes.value) return {};
@@ -39,22 +37,6 @@ onMounted(() => {
         error.value = true;
       });
 });
-async function handleDelete() {
-  const confirmed = window.confirm("Are you sure you want to permanently delete this recipe?");
-  if (!confirmed) return;
-  deleting.value = true;
-  deleteError.value = null;
-  const id = route.params.id;
-
-  try {
-    await client.delete(`/recipes/${id}`);
-    await router.push('/index');
-  } catch (err) {
-    deleteError.value = err?.response?.data?.message || 'Failed to delete recipe. Please try again.';
-  } finally {
-    deleting.value = false;
-  }
-}
 </script>
 
 <template>
@@ -85,18 +67,8 @@ async function handleDelete() {
         </div>
       </div>
 
-
-      <div v-if="deleteError" class="card-body">
-        <div class="alert alert-danger" role="alert">{{ deleteError }}</div>
-      </div>
-
       <div class="card-body">
         <router-link to="/index" class="btn btn-secondary m-3">Back</router-link>
-
-        <button class="btn btn-secondary m-3" @click="handleDelete" :disabled="deleting">
-          <span v-if="deleting">Deleting…</span>
-          <span v-else style="background-color: inherit; color: #650a0a">Delete</span>
-        </button>
       </div>
     </div>
   </div>
@@ -121,6 +93,11 @@ async function handleDelete() {
 
 .fw-semibold {
   font-weight: 600;
+}
+
+.btn:hover{
+  background-color: var(--button-hover-bg);
+  color: black;
 }
 </style>
 
