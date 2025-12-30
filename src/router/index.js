@@ -10,6 +10,7 @@ import Recipes from "@/router/recipes.js";
 import AuthView from "@/views/auth/AuthView.vue";
 import Details from "@/views/recipes/Details.vue";
 import ViewRecipe from "@/views/ViewRecipe.vue";
+import Edit from "@/views/recipes/Edit.vue";
 
 const routes = [
     {
@@ -81,6 +82,13 @@ const routes = [
         path: '/details/:id',
         name: 'details',
         component: Details,
+        meta: {
+            requiresAuth: true,
+        }
+    }, {
+        path: '/edit/:id',
+        name: 'edit',
+        component: Edit,
         meta: {
             requiresAuth: true,
         }

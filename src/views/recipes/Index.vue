@@ -55,6 +55,7 @@ onMounted(async () => {
         <p><strong>Category:</strong> {{ recipe.category }}</p>
 
         <router-link class="btn" :to="`/details/${recipe.id}`">Details</router-link>
+        <router-link class="btn" :to="`/edit/${recipe.id}`">Edit Recipe</router-link>
       </div>
     </div>
   </div>
